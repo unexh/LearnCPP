@@ -1,5 +1,6 @@
 ### Containers <-> Iterators <-> Algorithms
    #### There are 3 type of Containers
+        Container stores the objects they hold on heap.
         1. Sequence Containers (Array/Linked List)
         
                 * vector
