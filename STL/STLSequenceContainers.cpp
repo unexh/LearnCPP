@@ -58,7 +58,6 @@ void vectorDemo(){
     //4. traversing element
 
     //4a. not recommended :
-
     cout<<"Not recommened : "<< endl;
     for(int i=0;i<vec1.size();i++){
         cout << vec1[i] <<" ";
