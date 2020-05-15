@@ -2,13 +2,16 @@
 #include <vector>
 #include <deque>
 #include <list>
+#include <array>
+#include <algorithm>
 using namespace std;
+//Note : printIt(Container,msg) : is UsrDef Func 
 
 /*
 1. Sequence Container
     *similar to array -> grows in one direction
 
-    1.a Vectors >=>     [][][][][][][->
+    1.a Vectors : [][][][][][][->
         Properties of Vector:
             1. fast remove/insert at the end : O(1)
             2. slow insert/remove at begin/mid : O(n)
@@ -17,7 +20,7 @@ using namespace std;
 void vectorDemo();
 
 /*
-    1.b Deque >=>    <-][][][][][][->
+    1.b Deque : <-][][][][][][->
         Properties of Deque:
             1. fast remove/insert at the begin/end : O(1)
             2. slow insert/remove at middle : O(n)
@@ -26,21 +29,52 @@ void vectorDemo();
 void dequeDemo();
 
 /*
-    1.c List <Doubly linked list>=>  <=>[]<=>[]<=>[]<=>[]<=>[]<=>[]<=>
+    1.c List <Doubly linked list> :  <=>[]<=>[]<=>[]<=>[]<=>[]<=>[]<=>
         Properties of Deque:
-            1. fast remove/insert at the begin/end : O(1)
-            2. slow insert/remove at middle : O(n)
-            3. slow search : O(n)
+            1. fast remove/insert at any palce : O(1)
+            2. slow search: O(n) => much slower than Vector/Deque, Reason: Cache Misses
+            3. no random access, i.e. no [] operator.
 */
 void listDemo();
 
+/*
+    1.d Forward List <linked list> : ->[]->[]->[]->[]->[]->[]->
+        Properties of Forward List:
+            1. can only be traversed from head to Tail.
+*/
+//void fListDemo();
+
+/*
+    1.e Array <Array> : [][][][][][][][]
+        Properties of array:
+            1. can use Stl algorithms.
+            2. two different arrays are actually different data type
+            meaning, a function taking one may not accept other array.
+*/
+void arrayDemo();
+
+template <class T>
+void printIt(const T &container,string msg=""){
+    if(msg != ""){cout<<msg<<endl;}
+    for(auto element : container){
+        cout<<element<< " ";
+    }
+    cout<<endl;
+}
+
 int main(){
+    //uncommment to call
+    
     //vectorDemo();
     //dequeDemo();
-    listDemo();
+    //listDemo();
+    //arrayDemo();
 }
 
 void vectorDemo(){
+    cout<< "vectorDemo"<<endl;
+    
+
     //1. definition
     vector<int> vec1; //vec1.size() == 0
     vector<int> vec2(vec1); //copying vec1->vec2 => Copy Constructor
@@ -56,7 +90,6 @@ void vectorDemo(){
     cout << "first element :"<<vec1.at(2) <<endl; // throws range exception error if out of range
 
     //4. traversing element
-
     //4a. not recommended :
     cout<<"Not recommened : "<< endl;
     for(int i=0;i<vec1.size();i++){
@@ -93,17 +126,69 @@ void vectorDemo(){
 }
 
 void dequeDemo(){
+    cout<< "dequeDemo"<<endl;
+    
     //definition
     deque<int> deq1={5,4,7};
+
+    printIt(deq1);
 
     //insertion
     deq1.push_back(1);
     deq1.push_front(6);
+    
+    printIt(deq1,"Two {1:back ,6:front} added");
 
     //access : similar to vector
     cout << deq1[0];//6
 } 
 
 void listDemo(){
+    cout<< "listDemo"<<endl;
+    
     //definition
+    list<int> lis = {13,7,5};
+
+    printIt(lis,"Lis created:");
+
+    //insertion
+    lis.push_back(2); //lis : {13,7,5,2}
+    lis.push_front(17); //lis : {17,13,7,5,2}
+
+    printIt(lis,"push_back(2), push_front(17):");
+
+    //iterator access
+    list< int > :: iterator it = find(lis.begin(),lis.end(),7); //it->7
+    lis.insert(it,11);  //lis : {17,13,11,7,5,2}
+                        //faster than vector/deque : O(1)
+
+    printIt(lis,"{11} inserted at Iterator 'it':");
+
+    it++;               //it->5
+    lis.erase(it);      //lis : {17,13,11,7,2}
+
+    printIt(lis,"Element at 'it' erased");
+
+    //list Splice Function
+    //lis2.splice(itr,lis1,itrl1,itrl2); //=> O(1)
+    //cuts (itr1,itr2) range of data from *lis1* and place it at itr in *lis2*, all in O(1);
+}
+
+void arrayDemo(){
+    cout<< "arrayDemo"<<endl;
+    
+    int arr1[3]= {10,20,30};
+    
+    //definition
+    array<int,3> arr2 = {10,20,30};
+    array<int,4> arr3 = {10,20,30,40};
+    //both are diferent types
+
+    //Member Functions
+    /*
+    arr2.begin();
+    arr2.end();
+    arr2.size();
+    arr2.swap();
+     */       
 }
