@@ -76,17 +76,27 @@ void vectorDemo(){
     
 
     //1. definition
-    vector<int> vec1; //vec1.size() == 0
-    vector<int> vec2(vec1); //copying vec1->vec2 => Copy Constructor
-
+    vector< int > vec1;                     //vec1.size() == 0 //creates empty vector
+    vector< int > vec2(vec1);               //copying vec1->vec2 => Copy Constructor
+    vector< int > vec3(10);                 //vec3.size = 10, all elements zero
+    vector< int > vec3 = vec1;              //vec3 is copy of vec1
+    vector< int > vec4[10];                 //vec4 is an array of 10 int's vec, all initially zero
+    vector< string > vec5(20,"unknown");    //size = 20 , content : "unknown"
+    
+    //2D-vector:
+    vector< vector < int > > vecMatrix; //2D vec
+    int N=12,M=12;
+    vector< vector < int > > vecMatricSizeMN(N,vector < int >(M,0)); /* creates 2D vec of size N*M,
+    and fill it with '0' */
 
     //2. insertion
-    vec1.push_back(10);
+    vec1.push_back(10); //insert at the end
     vec1.push_back(5);
     vec1.push_back(15);
+    //vec1.insert()
 
     //3. accessing elements
-    cout << "first element :"<<vec1[0] <<endl; // no range check
+    cout << "first element :"<<vec1[0] <<endl;    // no range check
     cout << "first element :"<<vec1.at(2) <<endl; // throws range exception error if out of range
 
     //4. traversing element
@@ -123,6 +133,28 @@ void vectorDemo(){
     vec2.clear(); //deletes vector
     vec1.swap(vec2); //swaps the contents
 
+    //5. Checking is vec is empty:
+    bool is_non_empty_ok = !vec1.empty();
+    /*Not
+    bool is_nonempty_notgood = (v.size() >= 0); // as not all containers can return its size in O(1), 
+    //hence for checking there exists atleast on element is better done with Vec.empty() func
+    */
+
+   //6. Resizing a vector 
+
+   vec1.resize(20); // if size is dec : last elementsget deleted
+   //if size is inc : and push_back is used : elements will be pushed back,
+   //from the newly allocated space
+
+   /*7. Passing vectors to the func:
+    7a. readOnly mode:
+        void func(const vector <int> &vecName){ Do Somthing..;}
+
+    7b. update mode:
+        void func(vector <int> vecName){ Do Something...;}
+    */
+
+   
 }
 
 void dequeDemo(){
